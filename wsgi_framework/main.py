@@ -1,3 +1,11 @@
+<<<<<<< Updated upstream
+=======
+import html
+from quopri import decodestring
+from wsgi_framework.http_requests import GetRequests, PostRequests
+
+
+>>>>>>> Stashed changes
 class PageNotFound404:
     def __call__(self, request):
         return '404 WHAT', '404 PAGE Not Found'
@@ -25,3 +33,15 @@ class Framework:
         code, body = view(request)
         start_response(code, [('Content-Type', 'text/html')])
         return [body.encode('utf-8')]
+<<<<<<< Updated upstream
+=======
+
+    @staticmethod
+    def decode_value(data):
+        new_data = {}
+        for k, v in data.items():
+            val = v.replace('%', '=').replace("+", " ").encode('UTF-8')
+            val_decode_str = decodestring(val).decode('UTF-8')
+            new_data[k] = html.unescape(val_decode_str)
+        return new_data
+>>>>>>> Stashed changes
