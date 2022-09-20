@@ -1,5 +1,7 @@
+import html
 from quopri import decodestring
 from wsgi_framework.http_requests import GetRequests, PostRequests
+
 
 class PageNotFound404:
     def __call__(self, request):
@@ -48,7 +50,7 @@ class Framework:
     def decode_value(data):
         new_data = {}
         for k, v in data.items():
-            val = bytes(v.replace('%', '=').replace("+", " "), 'UTF-8')
+            val = v.replace('%', '=').replace("+", " ").encode('UTF-8')
             val_decode_str = decodestring(val).decode('UTF-8')
-            new_data[k] = val_decode_str
+            new_data[k] = html.unescape(val_decode_str)
         return new_data
