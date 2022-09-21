@@ -5,7 +5,7 @@
     <title>WSGI</title>
     <meta name="description" content="website description"/>
     <meta name="keywords" content="website keywords, website keywords"/>
-    <meta http-equiv="content-type" content="text/html; charset=windows-1252"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     {% block style %}
     {% include 'inc-styles.html' %}
     {% endblock style %}
@@ -27,11 +27,11 @@
             {% block menu %}
             <ul id="menu">
                 <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-                <li class="selected"><a href="/">Home</a></li>
-                <li><a href="examples">Examples</a></li>
-                <li><a href="page">A Page</a></li>
-                <li><a href="another_page">Another Page</a></li>
-                <li><a href="contact">Contact Us</a></li>
+                <li class="selected"><a href="/">Главная</a></li>
+                <li><a href="product_list">Список продуктов</a></li>
+                <li><a href="create_product">Создать продукт</a></li>
+                <li><a href="category_list">Список категорий</a></li>
+                <li><a href="create_category">Создать категорию</a></li>
             </ul>
             {% endblock menu %}
         </div>
