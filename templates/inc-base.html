@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<head>
+    <title>WSGI</title>
+    <meta name="description" content="website description"/>
+    <meta name="keywords" content="website keywords, website keywords"/>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252"/>
+    {% block style %}
+    {% include 'inc-styles.html' %}
+    {% endblock style %}
+</head>
+{% endblock head %}
+
+<body>
+<div id="main">
+    {% block header %}
+    <div id="header">
+        <div id="logo">
+            <div id="logo_text">
+                <!-- class="logo_colour", allows you to change the colour of the text -->
+                <h1><a href="/">shadow<span class="logo_colour">play_2</span></a></h1>
+                <h2>Simple. Contemporary. Website Template.</h2>
+            </div>
+        </div>
+        <div id="menubar">
+            {% block menu %}
+            <ul id="menu">
+                <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+                <li class="selected"><a href="/">Home</a></li>
+                <li><a href="examples">Examples</a></li>
+                <li><a href="page">A Page</a></li>
+                <li><a href="another_page">Another Page</a></li>
+                <li><a href="contact">Contact Us</a></li>
+            </ul>
+            {% endblock menu %}
+        </div>
+    </div>
+    <div id="content_header"></div>
+    {% endblock header %}
+
+    {% block main %}{% endblock main %}
+
+    {% block footer %}
+    <div id="content_footer"></div>
+    <div id="footer">
+        <p><a href="/">Home</a> | <a href="examples">Examples</a> | <a href="page">A Page</a> | <a href="another_page">Another
+            Page</a> | <a href="contact">Contact Us</a></p>
+        <p>Copyright &copy; shadowplay_2</p>
+    </div>
+    {% endblock footer %}
+</div>
+</body>
+</html>
