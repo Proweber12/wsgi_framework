@@ -1,0 +1,35 @@
+{% extends "inc-base.html" %}
+
+{% block menu %}
+<ul id="menu">
+    <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+    <li><a href="/">Главная</a></li>
+    <li><a href="/category_list/">Список категорий</a></li>
+    <li><a href="/create_category/">Создать категорию</a></li>
+</ul>
+{% endblock menu %}
+
+{% block main %}
+<div>
+    <li>
+        <a href="/buyer_list/">Список продавцов</a>
+    </li>
+    <li>
+        <a href="/create_buyer/">Создать продавца</a>
+    </li>
+</div>
+<h1>Добавление продавца товара</h1>
+<form method="post">
+    <select size="3" name="product_name">
+        {% for item in products %}
+        <option value="{{item.name}}">{{item.name}}</option>
+        {% endfor %}
+    </select>
+    <select size="3" name="buyer_name">
+        {% for item in buyers %}
+        <option value="{{item.name}}">{{item.name}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Добавить</button>
+</form>
+{% endblock main %}

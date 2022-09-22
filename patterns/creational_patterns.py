@@ -2,9 +2,12 @@ import html
 from copy import deepcopy
 from quopri import decodestring
 
+from patterns.behavioral_patterns import FileWriter, Subject
+
 
 class User:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 class Seller(User):
@@ -12,7 +15,9 @@ class Seller(User):
 
 
 class Buyer(User):
-    pass
+    def __init__(self, name):
+        self.products = []
+        super().__init__(name)
 
 
 class UserFactory:
@@ -22,8 +27,8 @@ class UserFactory:
     }
 
     @classmethod
-    def create(cls, type_):
-        return cls.types[type_]()
+    def create(cls, type_, name):
+        return cls.types[type_](name)
 
 
 class ProductPrototype:
@@ -32,12 +37,22 @@ class ProductPrototype:
         return deepcopy(self)
 
 
-class Product(ProductPrototype):
+class Product(ProductPrototype, Subject):
 
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.products.append(self)
+        self.buyers = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.buyers[item]
+
+    def add_buyer(self, buyer: Buyer):
+        self.buyers.append(buyer)
+        buyer.products.append(self)
+        self.notify()
 
 
 class FoodProduct(Product):
@@ -84,8 +99,8 @@ class Engine:
         self.categories = []
 
     @staticmethod
-    def create_user(type_):
-        return UserFactory.create(type_)
+    def create_user(type_, name):
+        return UserFactory.create(type_, name)
 
     @staticmethod
     def create_category(name, category=None):
@@ -107,6 +122,11 @@ class Engine:
             if item.name == name:
                 return item
         return None
+
+    def get_buyer(self, name) -> Buyer:
+        for item in self.buyers:
+            if item.name == name:
+                return item
 
     @staticmethod
     def decode_value(val):
