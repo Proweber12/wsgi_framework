@@ -1,38 +1,47 @@
 from wsgi_framework.templator import render
-from patterns.creational_patterns import Engine, Logger
+from patterns.creational_patterns import Engine
+from patterns.structural_patterns import AppRoute, Debug
 
 site = Engine()
-logger = Logger('main')
+
+routes = {}
 
 
+@AppRoute(routes=routes, url='/')
 class Index:
+    @Debug('Index call')
     def __call__(self, request):
         return '200 OK', render('index.html', date=request.get('date', None))
 
 
+@AppRoute(routes=routes, url='/examples/')
 class Examples:
     def __call__(self, request):
         return '200 OK', render('examples.html', date=request.get('date', None))
 
 
+@AppRoute(routes=routes, url='/page/')
 class Page:
     def __call__(self, request):
         return '200 OK', render('page.html', date=request.get('date', None))
 
 
+@AppRoute(routes=routes, url='/another_page/')
 class AnotherPage:
     def __call__(self, request):
         return '200 OK', render('another_page.html', date=request.get('date', None))
 
 
+@AppRoute(routes=routes, url='/contact/')
 class Contact:
     def __call__(self, request):
         return '200 OK', render('contact.html', date=request.get('date', None))
     
-    
+
+@AppRoute(routes=routes, url='/product_list/')
 class ProductsList:
+    @Debug('Product_list call')
     def __call__(self, request):
-        logger.log('Список товаров')
         try:
             category = site.find_category_by_id(
                 int(request['request_params']['id']))
@@ -44,9 +53,11 @@ class ProductsList:
                                     error='No products have been added yet')
 
 
+@AppRoute(routes=routes, url='/create_product/')
 class CreateProduct:
     category_id = -1
 
+    @Debug('Create_product call')
     def __call__(self, request):
         if request['method'] == 'POST':
             data = request['data']
@@ -78,7 +89,9 @@ class CreateProduct:
                 return '200 OK', render('create_product.html', error='No categories have been added yet')
 
 
+@AppRoute(routes=routes, url='/create_category/')
 class CreateCategory:
+    @Debug('Create_category call')
     def __call__(self, request):
 
         if request['method'] == 'POST':
@@ -105,14 +118,17 @@ class CreateCategory:
                                     categories=categories)
 
 
+@AppRoute(routes=routes, url='/category_list/')
 class CategoryList:
+    @Debug('Category_list call')
     def __call__(self, request):
-        logger.log('Список категорий')
         return '200 OK', render('category_list.html',
                                 objects_list=site.categories)
 
 
+@AppRoute(routes=routes, url='/copy_product/')
 class CopyProduct:
+    @Debug('Copy_product call')
     def __call__(self, request):
         request_params = request['request_params']
 
