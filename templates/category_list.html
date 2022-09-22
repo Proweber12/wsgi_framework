@@ -1,0 +1,30 @@
+{% extends "inc-base.html" %}
+
+{% block menu %}
+<ul id="menu">
+    <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+    <li><a href="/">Главная</a></li>
+    <li><a href="product_list">Список продуктов</a></li>
+    <li><a href="create_product">Создать продукт</a></li>
+    <li class="selected"><a href="category_list">Список категорий</a></li>
+    <li><a href="create_category">Создать категорию</a></li>
+</ul>
+{% endblock menu %}
+
+{% block main %}
+<a href="/">назад</a>
+
+<h1>Список категорий</h1>
+<ul>
+    {% for item in objects_list %}
+    <li>
+        {{item.name}} <span>Количество продуктов: {{item.product_count()}}</span>
+    </li>
+    {% endfor %}
+</ul>
+
+<div>
+    <li><a href="product_list">Список продуктов</a></li>
+    <li><a href="create_product">Создать продукт</a></li>
+</div>
+{% endblock main %}

@@ -1,0 +1,30 @@
+{% extends "inc-base.html" %}
+
+{% block menu %}
+<ul id="menu">
+    <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+    <li><a href="/">Главная</a></li>
+    <li><a href="product_list">Список продуктов</a></li>
+    <li class="selected"><a href="create_product">Создать продукт</a></li>
+    <li><a href="category_list">Список категорий</a></li>
+    <li><a href="create_category">Создать категорию</a></li>
+</ul>
+{% endblock menu %}
+
+{% block main %}
+<h1>{% if error %} {{ error }} {% endif %}</h1>
+<div>
+    <a href="/product_list/?id={{id}}">назад</a>
+</div>
+
+<br>
+<br>
+
+<div>
+    <h1>Список продуктов для категории "{{name}}"</h1>
+    <form method="post">
+        <input type="text" name="name" placeholder="Название">
+        <button type="submit">Сохранить и вернуться к списку продуктов</button>
+    </form>
+</div>
+{% endblock main %}
