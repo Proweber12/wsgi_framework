@@ -101,8 +101,8 @@ class CreateView(TemplateView):
 
 
 class ConsoleWriter:
-
-    def write(self, text):
+    @staticmethod
+    def write(text):
         print(text)
 
 

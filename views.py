@@ -1,11 +1,14 @@
 from wsgi_framework.templator import render
-from patterns.creational_patterns import Engine
+from patterns.creational_patterns import Engine, MapperRegistry
 from patterns.structural_patterns import AppRoute, Debug
 from patterns.behavioral_patterns import ListView, CreateView, BaseSerializer, EmailNotifier, SmsNotifier
+from patterns.architectural_pattern import UnitOfWork
 
 site = Engine()
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 routes = {}
 
@@ -158,8 +161,11 @@ class CopyProduct:
 
 @AppRoute(routes=routes, url='/buyer_list/')
 class BuyerListView(ListView):
-    queryset = site.buyers
     template_name = 'buyer_list.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('buyer')
+        return mapper.all()
 
 
 @AppRoute(routes=routes, url='/create_buyer/')
@@ -171,6 +177,8 @@ class BuyerCreateView(CreateView):
         name = site.decode_value(name)
         new_obj = site.create_user('buyer', name)
         site.buyers.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 @AppRoute(routes=routes, url='/add_buyer/')
