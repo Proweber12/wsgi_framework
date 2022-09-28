@@ -10,19 +10,24 @@
 {% endblock menu %}
 
 {% block main %}
-<h1>{% if error %} {{ error }} {% endif %}</h1>
 <div>
-    <a href="/product_list/?id={{id}}">назад</a>
+    <li>
+        <a href="/create_buyer/">Создать продавца</a>
+    </li>
+    <li>
+        <a href="/add_buyer/">Добавить продавца товара</a>
+    </li>
 </div>
-
-<br>
-<br>
-
+<h1>Список продавцов</h1>
 <div>
-    <h1>Список продуктов для категории "{{name}}"</h1>
-    <form method="post">
-        <input type="text" name="name" placeholder="Название">
-        <button type="submit">Сохранить и вернуться к списку продуктов</button>
-    </form>
+
+    {% for item in objects_list %}
+    <li>
+        {{item.name}}
+        {% for product in item.products %}
+        {{product.name}}
+        {% endfor %}
+    </li>
+    {% endfor %}
 </div>
 {% endblock main %}
