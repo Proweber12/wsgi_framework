@@ -18,7 +18,7 @@
 <div>
     <h1>Создание продавца</h1>
     <form method="post">
-        <input type="text" name="name" placeholder="Имя">
+        <input type="text" name="name" placeholder="Имя" oninput="this.value=this.value.replace(/[^a-zA-Zа-яА-Я]/g,'');">
         <button type="submit">Сохранить</button>
     </form>
 </div>
