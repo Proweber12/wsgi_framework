@@ -1,3 +1,4 @@
+import os
 import html
 from sqlite3 import connect
 from copy import deepcopy
@@ -219,7 +220,7 @@ class BuyerMapper:
             raise DbDeleteException(e.args)
 
 
-connection = connect('db.sqlite')
+connection = connect(os.environ.get("PATH_TO_DB", 'db/db.sqlite'))
 
 
 class MapperRegistry:

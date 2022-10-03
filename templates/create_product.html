@@ -21,7 +21,7 @@
 <div>
     <h1>Список продуктов для категории "{{name}}"</h1>
     <form method="post">
-        <input type="text" name="name" placeholder="Название">
+        <input type="text" name="name" placeholder="Название" oninput="this.value=this.value.replace(/[^a-zA-Zа-яА-Я!#&'()*+,\-./:;]/g,'');">
         <button type="submit">Сохранить и вернуться к списку продуктов</button>
     </form>
 </div>
